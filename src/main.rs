@@ -14,15 +14,9 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    println!("hello world",);
+    println!("type something:",);
 
-    x86_64::instructions::interrupts::int3();
-
-    for i in 0..5 {
-        println!("{}", i);
-    }
-
-    loop {}
+    kyros_rs::hlt_loop();
 }
 
 #[cfg(not(test))]
@@ -30,7 +24,7 @@ pub extern "C" fn _start() -> ! {
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
 
-    loop {}
+    kyros_rs::hlt_loop();
 }
 
 #[cfg(test)]
