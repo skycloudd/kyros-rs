@@ -9,10 +9,12 @@ extern crate alloc;
 use alloc::string::String;
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
+#[cfg(not(test))]
+use kyros_rs::println;
 use kyros_rs::{
     allocator,
     memory::{self, BootInfoFrameAllocator},
-    print, println,
+    print,
     vga_buffer::BUFFER_SIZE,
 };
 use x86_64::VirtAddr;
