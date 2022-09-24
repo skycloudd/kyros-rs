@@ -6,12 +6,14 @@
 
 extern crate alloc;
 
+use alloc::string::String;
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use kyros_rs::{
     allocator,
     memory::{self, BootInfoFrameAllocator},
-    println,
+    print, println,
+    vga_buffer::BUFFER_SIZE,
 };
 use x86_64::VirtAddr;
 
@@ -29,7 +31,13 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
     #[cfg(test)]
     test_main();
 
-    println!("hello world");
+    let mut output = String::from("[welcome to kyros]");
+
+    for _ in 0..(BUFFER_SIZE.width - output.len()) / 2 {
+        output.insert(0, ' ');
+    }
+
+    print!("{}\n\n> ", output);
 
     kyros_rs::hlt_loop();
 }
