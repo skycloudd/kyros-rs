@@ -38,10 +38,7 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
         output.insert(0, ' ');
     }
 
-    println!("{}", output);
-    println!();
-
-    println!();
+    println!("{}\n", output);
     print!("> ");
 
     let mut executor = Executor::new();
