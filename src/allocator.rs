@@ -6,7 +6,7 @@ use x86_64::structures::paging::{
 };
 use x86_64::VirtAddr;
 
-pub const HEAP_START: *mut u8 = 0x_4444_4444_0000 as *mut u8;
+pub const HEAP_START: usize = 0x_4444_4444_0000;
 pub const HEAP_SIZE: usize = 100 * 1024; // 100 KiB
 
 #[global_allocator]
@@ -49,7 +49,7 @@ pub fn init_heap(
     }
 
     unsafe {
-        ALLOCATOR.lock().init(HEAP_START, HEAP_SIZE);
+        ALLOCATOR.lock().init(HEAP_START as *mut u8, HEAP_SIZE);
     }
 
     Ok(())
