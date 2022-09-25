@@ -9,12 +9,11 @@ extern crate alloc;
 use alloc::string::String;
 use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
-#[cfg(not(test))]
-use kyros_rs::println;
 use kyros_rs::{
     allocator,
     memory::{self, BootInfoFrameAllocator},
-    print,
+    print, println,
+    task::{executor::Executor, keyboard, Task},
     vga_buffer::BUFFER_SIZE,
 };
 use x86_64::VirtAddr;
@@ -39,9 +38,16 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
         output.insert(0, ' ');
     }
 
-    print!("{}\n\n> ", output);
+    println!("{}", output);
+    println!();
 
-    kyros_rs::hlt_loop();
+    println!();
+    print!("> ");
+
+    let mut executor = Executor::new();
+    executor.spawn(Task::new(keyboard::print_keypresses()));
+
+    executor.run();
 }
 
 #[cfg(not(test))]
