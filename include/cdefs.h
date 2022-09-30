@@ -9,4 +9,4 @@
 	#define __DECLS_END
 #endif
 
-#endif /* !__KYROS_CDEFS_H */
+#endif /* !__KYROS_CDEFS_H_ */
